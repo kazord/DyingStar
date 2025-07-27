@@ -38,4 +38,5 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Login"
 
+[connection signal="ready" from="." to="." method="_on_ready"]
 [connection signal="pressed" from="Control/VBoxContainer/Button" to="." method="_on_button_pressed"]
