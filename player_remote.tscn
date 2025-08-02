@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://cu2jncdgxjipn"]
+
+[ext_resource type="Script" uid="uid://deluofxu0cadt" path="res://player_remote.gd" id="1_a7uas"]
+[ext_resource type="ArrayMesh" uid="uid://v721mhcqkdjk" path="res://Models/astronaut/uploads_files_2954422_astronaut_3d_model.obj" id="1_kcfk1"]
+[ext_resource type="Texture2D" uid="uid://cvxuejp6cvr6y" path="res://Models/astronaut/textures/body_BaseColor.png" id="2_u44t3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_32r28"]
+albedo_texture = ExtResource("2_u44t3")
+
+[node name="PlayerRemote" type="Node3D"]
+script = ExtResource("1_a7uas")
+
+[node name="UploadsFiles2954422Astronaut3dModel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.039421, 0, 0.153466)
+material_override = SubResource("StandardMaterial3D_32r28")
+mesh = ExtResource("1_kcfk1")
+
+[node name="LabelPlayerName" type="Label3D" parent="UploadsFiles2954422Astronaut3dModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.33655, 0)
