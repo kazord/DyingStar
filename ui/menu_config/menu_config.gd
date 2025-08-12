@@ -1,8 +1,9 @@
 extends Control
 
-@onready var input_button_scene = preload("res://ui/menu_config/input_button.tscn")
+var input_button_scene = preload("res://ui/menu_config/input_button.tscn")
+
 @onready var action_list = $PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList
-@onready var search_bar = $PanelContainer/MarginContainer/VBoxContainer/TextEdit
+@onready var search_bar = $PanelContainer/MarginContainer/VBoxContainer/SearchBar
 @onready var save_config = $PanelContainer/MarginContainer/VBoxContainer/SaveButton
 
 var input_map_path = "user://inputs.map"
@@ -16,6 +17,7 @@ var keycode_dic: Dictionary = {}
 var last_press = ""
 
 func _ready() -> void:
+	if multiplayer.is_server(): return
 	InputMap.load_from_project_settings()
 	import_input_map()
 	create_action_list()
@@ -35,14 +37,23 @@ func create_action_list():
 		action_label.text = action.replace("_", " ").to_upper()
 		
 		var events = InputMap.action_get_events(action)
-		if(events.size() > 0):
-			input_label.text = events[0].as_text().trim_suffix(" (Physical)")
+		if not events.is_empty():
+			var event = events[0] as InputEvent
+			input_label.text = format_input_label(event)
+				
 		else :
 			input_label.text = ""
 		
 		action_list.add_child(action_bt)
 		action_bt.pressed.connect(_on_input_button_pressed.bind(action_bt, action))
 		button_dic.set(action_label.text, action_bt)
+
+func format_input_label(event: InputEvent) -> String:
+	if event is InputEventKey:
+		var keycode = DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
+		return OS.get_keycode_string(keycode)
+	
+	return event.as_text()
 
 func _on_input_button_pressed(b, a):
 	if !is_remapping:
@@ -61,7 +72,7 @@ func _input(ev: InputEvent):
 			InputMap.action_add_event(action_to_remap, ev)
 			_update_action_list(remapping_button, ev)
 			if ev is InputEventKey:
-				keycode_dic.set(action_to_remap, OS.get_keycode_string(ev.physical_keycode))
+				keycode_dic.set(action_to_remap, ev.as_text_physical_keycode())
 			elif ev is InputEventMouseButton:
 				keycode_dic.set(action_to_remap, "mouse_" + str(ev.button_index))
 			is_remapping = false
@@ -71,16 +82,17 @@ func _input(ev: InputEvent):
 			
 			accept_event()
 
-func _update_action_list(b, ev):
-	b.find_child("LabelInput").text = ev.as_text().trim_suffix(" (Physical)")
+func _update_action_list(button: Button, ev: InputEvent):
+	button.find_child("LabelInput").text = format_input_label(ev)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if(event.is_action_pressed("open_shortcut_menu")):
-		game_paused = !$PanelContainer.visible
-		if game_paused:
-			$PanelContainer.visible = true
+	if event.is_action_pressed("open_shortcut_menu"):
+		if not visible:
+			visible = true
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		else:
-			$PanelContainer.visible = false
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			visible = false
 		get_tree().root.get_viewport().set_input_as_handled()
 	
 	if(event.is_pressed() && last_press == event.as_text()):
@@ -98,8 +110,8 @@ func _on_reset_button_pressed() -> void:
 	create_action_list()
 	save_config.visible = true
 
-func _on_text_edit_text_changed() -> void:
-	var search = search_bar.text.to_lower()
+func _on_text_edit_text_changed(new_text: String) -> void:
+	var search = new_text.to_lower()
 	for k in button_dic:
 		if search == "" or search in str(k).to_lower():
 			button_dic[k].visible = true
@@ -142,7 +154,7 @@ func import_input_map() -> void:
 			input_event.button_index = int(ev_str.split("_")[1])
 		else:
 			input_event = InputEventKey.new()
-			input_event.keycode = OS.find_keycode_from_string(ev_str)
+			input_event.physical_keycode = OS.find_keycode_from_string(ev_str)
 		print("ev : " + ev_str + " for " + action_name)
 		InputMap.action_add_event(action_name, input_event)
 	
