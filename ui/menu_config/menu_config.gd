@@ -63,6 +63,7 @@ func _on_input_button_pressed(b, a):
 		action_to_remap = a
 		remapping_button = b
 		b.find_child("LabelInput").text = "Press key to bind..."
+	get_tree().root.get_viewport().set_input_as_handled()
 
 func _input(ev: InputEvent):
 	if is_remapping:
@@ -94,11 +95,8 @@ func _input(ev: InputEvent):
 			visible = false
 		get_tree().root.get_viewport().set_input_as_handled()
 		
-	if visible:
-		get_tree().root.get_viewport().set_input_as_handled()
 	is_shown = visible
 	
-
 func _update_action_list(button: Button, ev: InputEvent):
 	button.find_child("LabelInput").text = format_input_label(ev)
 
