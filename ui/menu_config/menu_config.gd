@@ -1,4 +1,5 @@
 extends Control
+class_name MenuConfig
 
 var input_button_scene = preload("res://ui/menu_config/input_button.tscn")
 
@@ -7,7 +8,7 @@ var input_button_scene = preload("res://ui/menu_config/input_button.tscn")
 @onready var save_config = $PanelContainer/MarginContainer/VBoxContainer/SaveButton
 
 var input_map_path = "user://inputs.map"
-var game_paused: bool = false
+static var is_shown: bool = false
 var is_remapping = false
 var action_to_remap = null
 var remapping_button = null
@@ -90,9 +91,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not visible:
 			visible = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			is_shown = true
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			visible = false
+			is_shown = false
 		get_tree().root.get_viewport().set_input_as_handled()
 	
 	if(event.is_pressed() && last_press == event.as_text()):
@@ -127,8 +130,9 @@ func _on_save_button_pressed() -> void:
 	
 	print("Actions exportées vers :", input_map_path)
 	save_config.visible = false
-	$PanelContainer.visible = false
-	game_paused = false
+	visible = false
+	is_shown = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func import_input_map() -> void:
 	if not FileAccess.file_exists(input_map_path):
