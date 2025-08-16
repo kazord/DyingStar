@@ -80,7 +80,6 @@ func _ready() -> void:
 	Server.spawn_ship.rpc_id(1)
 	
 
-
 func connect_area_detect():
 	$AreaDetector.area_entered.connect(_on_area_detector_area_entered)
 	$AreaDetector.area_exited.connect(_on_area_detector_area_exited)

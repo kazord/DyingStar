@@ -8,7 +8,6 @@ var input_button_scene = preload("res://ui/menu_config/input_button.tscn")
 @onready var save_config = $PanelContainer/MarginContainer/VBoxContainer/SaveButton
 
 var input_map_path = "user://inputs.map"
-static var is_shown: bool = false
 var is_remapping = false
 var action_to_remap = null
 var remapping_button = null
@@ -16,8 +15,10 @@ var remapping_button = null
 var button_dic: Dictionary = {}
 var keycode_dic: Dictionary = {}
 var last_press = ""
+static var is_shown
 
 func _ready() -> void:
+	is_shown = false
 	if multiplayer.is_server(): return
 	InputMap.load_from_project_settings()
 	import_input_map()
@@ -81,31 +82,25 @@ func _input(ev: InputEvent):
 			remapping_button = null
 			save_config.visible = true
 			
-			accept_event()
-
-func _update_action_list(button: Button, ev: InputEvent):
-	button.find_child("LabelInput").text = format_input_label(ev)
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("open_shortcut_menu"):
+			get_tree().root.get_viewport().set_input_as_handled()
+			return
+			
+	if ev.is_action_pressed("open_shortcut_menu"):
 		if not visible:
-			visible = true
+			visible = true			
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			is_shown = true
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			visible = false
-			is_shown = false
 		get_tree().root.get_viewport().set_input_as_handled()
-	
-	if(event.is_pressed() && last_press == event.as_text()):
-		#ignore hold press
-		return
-	elif event.is_pressed():
-		last_press = event.as_text()
 		
-	if(not event.is_pressed()):
-		last_press = ""
+	if visible:
+		get_tree().root.get_viewport().set_input_as_handled()
+	is_shown = visible
+	
+
+func _update_action_list(button: Button, ev: InputEvent):
+	button.find_child("LabelInput").text = format_input_label(ev)
 
 func _on_reset_button_pressed() -> void:
 	InputMap.load_from_project_settings()
@@ -131,7 +126,6 @@ func _on_save_button_pressed() -> void:
 	print("Actions exportées vers :", input_map_path)
 	save_config.visible = false
 	visible = false
-	is_shown = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func import_input_map() -> void:
