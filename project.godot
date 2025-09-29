@@ -45,6 +45,7 @@ BackgroundMusic="*res://scenes/globals/background_music.tscn"
 uuid="*res://addons/uuid/uuid.gd"
 PersistanceManager="*res://server/persistance_manager/PersistanceManager.cs"
 Endtoend="*res://scenes/globals/endtoend.gd"
+WwiseRuntimeManager="*res://addons/Wwise/runtime/wwise_runtime_manager.gd"
 
 [debug]
 
@@ -65,7 +66,7 @@ project/assembly_name="StarDeception"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/fmod/plugin.cfg", "res://addons/extremely_fast_atmosphere/plugin.cfg", "res://addons/gut/plugin.cfg", "res://addons/open-world-database/plugin.cfg", "res://addons/uuid/plugin.cfg")
+enabled=PackedStringArray("res://addons/extremely_fast_atmosphere/plugin.cfg", "res://addons/gut/plugin.cfg", "res://addons/open-world-database/plugin.cfg", "res://addons/uuid/plugin.cfg")
 
 [file_customization]
 
@@ -202,3 +203,10 @@ renderer/rendering_method.mobile="gl_compatibility"
 anti_aliasing/quality/msaa_3d=1
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 occlusion_culling/use_occlusion_culling=true
+
+[wwise]
+
+common_user_settings/root_output_path="res://GeneratedSoundBanks"
+common_user_settings/samples_per_frame=1
+common_user_settings/sample_rate=3
+project_settings/windows_platform_info="res://Wwise/resources/Windows.tres"

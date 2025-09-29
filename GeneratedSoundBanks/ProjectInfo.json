@@ -1,0 +1,29 @@
+{
+ "ProjectInfo": {
+  "Project": {
+   "Name": "DyingStar_WwiseSession",
+   "GUID": "{196CFA7E-ED60-44D8-8044-113B0A892616}",
+   "Generator": "2024.1.8.8893"
+  },
+  "CacheRoot": "../../DyingStar_WwiseSession/.cache",
+  "Platforms": [
+   {
+    "Name": "Windows",
+    "GUID": "{3E5DE781-F98B-42C3-9617-B14E1D1BB369}",
+    "BasePlatform": "Windows",
+    "BasePlatformGUID": "{6E0CB257-C6C8-4C5C-8366-2740DFC441EB}",
+    "Path": "Windows"
+   }
+  ],
+  "Languages": [
+   {
+    "Name": "English(US)",
+    "Id": "684519430",
+    "GUID": "{004542B0-6B27-4A0B-B2D6-83538DECC221}",
+    "Default": "true",
+    "UseAsStandIn": "true"
+   }
+  ],
+  "FileHash": "{F76F1AD3-F4F6-EDA6-F4D9-3094979175C5}"
+ }
+}
