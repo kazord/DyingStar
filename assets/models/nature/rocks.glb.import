@@ -15,9 +15,11 @@ dest_files=["res://.godot/imported/rocks.glb-6cb3ae0e1bd65f036d2650eba56aad27.sc
 
 nodes/root_type=""
 nodes/root_name=""
+nodes/root_script=null
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
 meshes/generate_lods=true
@@ -32,6 +34,9 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
 _subresources={
 "meshes": {
 "rocks_Icosphere_001": {
@@ -40,7 +45,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/nature/rock_small.res"
+"save_to_file/fallback_path": "res://assets/models/nature/rock_small.res",
+"save_to_file/path": "uid://rhl12pcpfff6"
 },
 "rocks_Icosphere_002": {
 "generate/lightmap_uv": 0,
@@ -48,7 +54,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/nature/rock_large.res"
+"save_to_file/fallback_path": "res://assets/models/nature/rock_large.res",
+"save_to_file/path": "uid://qs2ropifk3ww"
 },
 "rocks_Icosphere_003": {
 "generate/lightmap_uv": 0,
@@ -56,7 +63,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/nature/rock_medium.res"
+"save_to_file/fallback_path": "res://assets/models/nature/rock_medium.res",
+"save_to_file/path": "uid://cxl8l75u4r1bg"
 }
 }
 }
