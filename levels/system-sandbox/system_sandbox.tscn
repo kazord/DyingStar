@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://drqxadtx316hs"]
+[gd_scene load_steps=8 format=3 uid="uid://drqxadtx316hs"]
 
 [ext_resource type="Script" uid="uid://de1e8utjyqtod" path="res://levels/system-sandbox/system_sandbox.gd" id="1_6wdpo"]
 [ext_resource type="Script" uid="uid://cj5kd1hkfvjrg" path="res://server/persistance_manager/DataPlanet.gd" id="4_88c12"]
+[ext_resource type="Script" uid="uid://0rx55gstejmo" path="res://levels/system-sandbox/record_camera_3d.gd" id="4_y6v83"]
 [ext_resource type="PackedScene" uid="uid://vsepjo7bgp7v" path="res://scenes/star/star.tscn" id="6_0y0hx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_swxq8"]
@@ -40,3 +41,7 @@ environment = SubResource("Environment_jp7ei")
 [node name="DataPlanet" type="Node" parent="SmallProps"]
 script = ExtResource("4_88c12")
 metadata/_custom_type_script = "uid://cj5kd1hkfvjrg"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.38748226218639)
+script = ExtResource("4_y6v83")
